@@ -4,7 +4,7 @@
 
 <br>
 
-<img width="1000" alt="Screenshot 2024-01-28 at 17 17 24" src="https://github.com/fac30/Front-end-ChatGPT-clone-workshop--Oleg-Jack-Elena-Emma/assets/113034133/4d8fb23f-d128-4eb4-b661-fc9cfcd55ea7">
+<img width="1000" alt="image" src="https://github.com/otam-mato/ChatAI_frontend_app/assets/113034133/7072215a-ce77-4a5e-9318-162bf21fcfbb">
 
 <br>
 
