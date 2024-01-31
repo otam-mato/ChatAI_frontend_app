@@ -8,7 +8,7 @@
 
 <br>
 
-**[link to the source code]()**
+**[link to the source code](https://github.com/otam-mato/ChatAI_frontend_app/blob/main/index.html)**
 
 **[link to the deployed app on github pages]()**
 
