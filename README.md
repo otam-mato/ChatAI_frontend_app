@@ -8,7 +8,7 @@ The frontend experiment to interact with **OpenAI API**. The **JavaScript** code
 
 <br>
 
-<img width="1000" alt="image" src="https://github.com/otam-mato/ChatAI_frontend_app/assets/113034133/7072215a-ce77-4a5e-9318-162bf21fcfbb">
+<img width="1000" alt="image" src="https://github.com/otam-mato/ChatAI_frontend_app/assets/113034133/4a60c657-4d37-47c3-bdec-6467b34ca1eb">
 
 <br>
 
