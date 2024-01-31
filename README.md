@@ -101,4 +101,4 @@ The JavaScript code handles the main functionality of your chat interface, inclu
 
 
 > [!NOTE]
-> Keep in mind that the actual API endpoint and key handling should be implemented securely in a production environment.
+> Keep in mind that the actual API endpoint and key handling should be implemented securely in a production environment. Production requests must be routed through your own backend server where your API key can be securely loaded from an environment variable or key management service.
