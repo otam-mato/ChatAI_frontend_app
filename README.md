@@ -30,7 +30,6 @@ The frontend experiment to interact with **OpenAI API**. The **JavaScript** code
 ### Stretch stories
 
 1. **Send Chat History with API Requests**: As a front-end developer, I want to include the chat history in each API request to OpenAI. This will involve appending previous chat messages and responses to the request payload, ensuring the AI can contextualise new messages based on the ongoing conversation.
-2. **Create a separate config file for Environment Variables**: As a front-end developer, I aim to create my own config file for storing sensitive information like the OpenAI API key and exclude it from GitHub using a `.gitignore` file. I plan to manually load these variables at the start of my application, understanding this approach doesn't offer real security in a front-end only environment but is valuable for learning about environment variables.
 
 
 ---
