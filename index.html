@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT Clone</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* height: 100vh; */
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 50%;
+            margin: auto;
+        }
+
+        #apiform {
+            display: none;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        li {
+            text-align: justify;
+            
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        div {
+            display: block;
+            margin: 15px 0;
+            font-size: 14px;
+            line-height: 20px;
+            color: #333;
+            
+        }
+
+        inputform {
+            border: 1px solid #333;
+        }
+        
+
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            height: 100px;
+            /* Changed from 150px */
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            height: 100px;
+            /* Changed from 150px */
+        }
+
+        button {
+            background-color: rgb(116, 117, 116);
+            color: rgb(255, 255, 255);
+            font-weight: bold;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 300px;
+        }
+
+        button:hover {
+            background-color: #ebd990;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .result h1 {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .result img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #333;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            form {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>ChatAI</h1>
+    <form id="apiform" onsubmit="addApiKey(event)" role="form">
+        <fieldset>
+            <legend>APIKey management area</legend>
+            <label id="apiKeyLabel" for="apiKey">Add your API key:</label>
+            <input type="text" id="apiKey" name="apiKey" required aria-labelledby="apiKeyLabel">
+            <button type="submit" aria-label="Add API Key">Add API Key</button>
+        </fieldset>
+    </form>
+    <button onclick="deleteApiKey()" aria-label="Manage API Key">Manage API Key</button>
+    <form id="inputform" onsubmit="searchQuestion(event)">
+        <fieldset>
+            <legend>Input</legend>
+            <label id="questionLabel" for="chatGPT">Enter your question:</label>
+            <textarea id="chatGPT" name="question" required aria-labelledby="questionLabel"></textarea>
+            <button type="submit" aria-label="Answer">Answer</button>
+        </fieldset>
+        <div id="history">
+            <label>Q&A History:</label>
+            <ul id="questionList"></ul>
+            <button id="clearHistoryBtn" onclick="clearHistory()" aria-label="Clear History">Clear History</button>
+        </div>
+        <!--<div class="result"></div> -->
+    </form>
+    <script>
+        // Global variables to store API key and question history
+        var apiKeyValue = localStorage.getItem('apiKey') || "";
+        var questionHistory = JSON.parse(localStorage.getItem('questionHistory')) || [];
+    
+        // Function to hide the API form
+        function hideApiForm() {
+            document.getElementById('apiform').style.display = 'none';
+        }
+    
+        // Function to add API key
+        function addApiKey(event) {
+            event.preventDefault();
+            apiKeyValue = document.getElementById('apiKey').value;
+            localStorage.setItem('apiKey', apiKeyValue);
+            console.log("API Key added:", apiKeyValue);
+            hideApiForm();
+        }
+    
+        // Function to delete API key
+        function deleteApiKey() {
+            localStorage.removeItem('apiKey');
+            document.getElementById('apiform').style.display = 'block';
+        }
+    
+        // Function to search and display the response to a user's question
+        function searchQuestion(event) {
+            event.preventDefault();
+            var question = document.getElementById('chatGPT').value;
+            var apiKey = localStorage.getItem('apiKey');
+            
+            // Check if API key is present
+            if (!apiKey) {
+                alert("Please add your API key first.");
+                return;
+            }
+    
+            // Make API call to OpenAI GPT-3.5
+            makeChatGPTApiCall(question)
+                .then(response => {
+                    updateQuestionHistory(question, response.choices[0].message.content);
+                })
+                .catch(error => {
+                    console.error("API Error:", error);
+                    alert("Failed to fetch data. Please try again.");
+                });
+        }
+    
+        // Function to update the question history and display on the UI
+        function updateQuestionHistory(question, answer) {
+            var questionItem = document.createElement('li');
+            var answerItem = document.createElement('li');
+            questionItem.innerHTML = `<strong>Q:</strong> ${question}`;
+            answerItem.innerHTML = `<strong>A:</strong> ${answer}`;
+            var questionList = document.getElementById('questionList');
+            questionList.appendChild(questionItem);
+            questionList.appendChild(answerItem);
+            questionHistory.push({ question, answer });
+            localStorage.setItem('questionHistory', JSON.stringify(questionHistory));
+        }
+    
+        // Function to make API call to OpenAI GPT-3.5
+        function makeChatGPTApiCall(question) {
+            var apiUrl = 'https://api.openai.com/v1/chat/completions';
+            var apiKey = localStorage.getItem('apiKey');
+    
+            // Create the messages array using the existing conversation history
+            var messages = questionHistory.map(entry => ({
+                role: 'system',
+                content: 'You are a helpful assistant.',
+            }, {
+                role: 'user',
+                content: entry.question,
+            }));
+    
+            // Add the current user question to the messages array
+            messages.push({ role: 'user', content: question });
+    
+            return fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + apiKey,
+                },
+                body: JSON.stringify({
+                    messages: messages, // Use the existing conversation history
+                    model: 'gpt-3.5-turbo',
+                }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('API request failed: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.error('API Error:', error);
+                return response.text().then(text => {
+                    console.error('API Response Text:', text);
+                    throw error;
+                });
+            });
+        }
+    
+        // Function to clear the question history
+        function clearHistory() {
+            localStorage.removeItem('questionHistory');
+            var questionList = document.getElementById('questionList');
+            questionList.innerHTML = "";
+            questionHistory = [];
+        }
+    
+        // Function to check the API key status and adjust the display
+        function checkApiKeyStatus() {
+            apiKeyValue = localStorage.getItem('apiKey') || "";
+            var apiform = document.getElementById('apiform');
+            if (apiKeyValue) {
+                apiform.style.display = 'none';
+            } else {
+                apiform.style.display = 'block';
+            }
+        }
+    
+        // Immediately run functions on page load
+        (function () {
+            checkApiKeyStatus();
+            displayQuestionHistory();
+        })();
+    
+        // Attach an event listener to the "Clear History" button
+        document.getElementById('clearHistoryBtn').addEventListener('click', function(event) {
+            event.preventDefault();
+            clearHistory();
+        });
+    
+        // Function to display the existing question history on the UI
+        function displayQuestionHistory() {
+            var questionList = document.getElementById('questionList');
+            questionHistory.forEach(entry => {
+                var questionItem = document.createElement('li');
+                var answerItem = document.createElement('li');
+                questionItem.innerHTML = `<strong>Q:</strong> ${entry.question}`;
+                answerItem.innerHTML = `<strong>A:</strong> ${entry.answer}`;
+                questionList.appendChild(questionItem);
+                questionList.appendChild(answerItem);
+            });
+        }
+    </script>
+</body>
+</html>
