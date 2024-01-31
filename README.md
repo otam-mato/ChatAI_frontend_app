@@ -37,7 +37,7 @@ The frontend experiment to interact with **OpenAI API**. The **JavaScript** code
 
 ### Implementation
 
-We created an HTML file for a web page that implements a simple chat interface using the OpenAI GPT-3.5 model. Here's a brief overview of the structure and functionality:
+Created an HTML file for a web page that implements a simple chat interface using the OpenAI GPT-3.5 model. Here's a brief overview of the structure and functionality:
 
 1. **HTML Structure:**
    - The HTML document starts with the usual structure, including the `<!DOCTYPE html>` declaration and the opening `<html>` tag.
