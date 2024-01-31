@@ -24,7 +24,7 @@ The frontend experiment to interact with **OpenAI API**. The **JavaScript** code
 2. **API Key Entry**: As a front-end developer, I want to create a secure input field for entering my API key and storing it in a local variable, which I understand will only be for the learning process and not for a production environment.
 3. **Store API Key Temporarily**: As a front-end developer, I want to temporarily store my entered API key in a JavaScript variable upon form submission and then remove the input field from the UI for subsequent chats.
 4. **Send API Requests**: As a front-end developer, I want to write a JavaScript function that sends the captured text to the OpenAI API, using the **`https://api.openai.com/v1/chat/completions`** endpoint with the API key in the header, and to get a response, using **`fetch()`** and **`.then()`** (and probably not using `async`/`await`, unless you are confident using it).
-5. **Handle API Responses**: As a front-end developer, I want to take the response from the OpenAI API and display it in the designated section, using methods like **`JSON.parse()`** and `**JSON.stringify**` and updating the DOM to display the response.
+5. **Handle API Responses**: As a front-end developer, I want to take the response from the OpenAI API and display it in the designated section, using methods like **`JSON.parse()`** and **`JSON.stringify`** and updating the DOM to display the response.
 6. **Enhance User Interaction**: As a front-end developer, I want to add CSS to make the interaction with my bot more visually appealing.
 
 ### Stretch stories
