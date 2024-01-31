@@ -1,4 +1,4 @@
-## Front-end ChatAI
+## Front-end experiment with OpenAI API
 
 ### Description
 
